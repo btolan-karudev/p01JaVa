@@ -1,43 +1,60 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.*;
 
 public class AnalyticsCounter {
+
     private static int headacheCount = 0;    // initialize to 0
     private static int rashCount = 0;        // initialize to 0
     private static int pupilCount = 0;        // initialize to 0
-    private static int pupilCCount = 0;        // initialize to 0
+
 
     public static void main(String args[]) throws Exception {
-        // first get input
-        BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"));
-        String line = reader.readLine();
+
+        // 1. extraire le lignes du fichie symptom.txt dans une list OK
+        ReadSymptomDataFromFile readSymptom = new ReadSymptomDataFromFile("symptoms.txt");
+        List<String> results =  readSymptom.getSymptoms();
 
 
-        while (line != null) {
-            System.out.println("symptom from file: " + line);
-            if (line.equals("headache")) {
-                headacheCount++;
-                System.out.println("number of headaches: " + headacheCount);
-            } else if (line.equals("rash")) {
-                rashCount++;
-            } else if (line.contains("dilated pupils")) {
-                pupilCount++;
-            } else if (line.contains("constricted pupils")) {
-                pupilCCount++;
-            }
+        // 2. appeler la methode symptomCounterMakeHash qui calule le nomre de fois que le sym et le stoquer dans une hashMap
+        SymptomCounter syCountHash = new SymptomCounter();
+        HashMap hashMapSym = new HashMap<>();
+        hashMapSym = syCountHash.symptomCounterMakeHash((ArrayList<String>) results);
 
-            line = reader.readLine();    // get another symptom
-        }
 
-        // next generate output
-        FileWriter writer = new FileWriter("result.out");
-        writer.write("headache: " + headacheCount + "\n");
-        writer.write("rash: " + rashCount + "\n");
-        writer.write("dilated pupils: " + pupilCount + "\n");
-        writer.write("constricted pupils: " + pupilCCount + "\n");
-        writer.close();
+
+
+        System.out.println(hashMapSym);
+
+
+        TreeMap treMp = new TreeMap();
+
+        treMp = convertHmToTm(hashMapSym);
+
+        System.out.println(treMp);
+
+        WriteSymptomsToFile writerSym = new WriteSymptomsToFile();
+
+        writerSym.writeFile(treMp);
+
+
+
+
+
+
+
+        // 3. apeler la metode sort de Collection pour metre mon hasMAp en ordre aplhabetique (voir TreeMap)
+        // 4. creation du fichier final avec
+
     }
+    public static <String, Integer> TreeMap<String, Integer> convertHmToTm(HashMap<String, Integer> hm)
+    {
+
+        TreeMap<String, Integer> treeMap = new TreeMap<>();
+
+        treeMap.putAll(hm);
+
+        return treeMap;
+    }
+
 }
