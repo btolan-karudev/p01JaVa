@@ -5,13 +5,18 @@ import java.util.*;
 public class AnalyticsCounter {
 
 
+    /**
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
 
         // 1. extraire les lignes d'un fichier dans une liste
         ReadSymptomDataFromFile readSymptom = new ReadSymptomDataFromFile("symptoms.txt");
-        List<String> results =  readSymptom.getSymptoms();
+        List<String> results = readSymptom.getSymptoms();
 
-        // 2. faire une boucle sur la liste obtenue pour calculer le nombre de fois que les symptômes se répètent et la mettre dans un dictionnaire avec key value
+        // 2. faire une boucle sur la liste obtenue pour calculer le nombre de fois que les symptômes se répètent
+        // et la mettre dans un dictionnaire avec key value
         SymptomCounter symptomCountHashMap = new SymptomCounter();
         HashMap hashMapSym = symptomCountHashMap.symptomCounterMakeHash((ArrayList<String>) results);
 

@@ -1,16 +1,16 @@
 package com.hemebiotech.analytics;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 /**
- *
+ * this class counts the number of symptoms
  */
 public class SymptomCounter {
 
 
     /**
+     * this function requires an ArrayList in parameter, then it crates a HashMap with the symptoms
+     * in the key and the number of occurrences in the value and returns the HashMap
      *
      * @param symptomList
      * @return
@@ -26,7 +26,6 @@ public class SymptomCounter {
                 symptomsHash.put(item, 1);
             }
         }
-
 
         return symptomsHash;
 
