@@ -1,9 +1,7 @@
 anxiety: 5
 arrhythmias: 3
-banane: 1
 blindness: 1
 blurred vision: 5
-choco: 1
 constricted pupils: 3
 cough: 6
 dilated pupils: 4
@@ -23,4 +21,3 @@ stiff neck: 4
 stomach pain: 3
 tremor: 4
 water retention: 1
-xyz: 2

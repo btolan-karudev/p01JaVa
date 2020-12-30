@@ -5,22 +5,21 @@ import java.util.*;
 public class AnalyticsCounter {
 
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-        // 1. extraire les lignes du fichier symptom.txt dans une liste OK
+        // 1. extraire les lignes d'un fichier dans une liste
         ReadSymptomDataFromFile readSymptom = new ReadSymptomDataFromFile("symptoms.txt");
         List<String> results =  readSymptom.getSymptoms();
 
-        // 2. appeler la methode symptomCounterMakeHash qui calule le nombre de fois que le sym et le stocker dans une hashMap
+        // 2. faire une boucle sur la liste obtenue pour calculer le nombre de fois que les symptômes se répètent et la mettre dans un dictionnaire avec key value
         SymptomCounter symptomCountHashMap = new SymptomCounter();
-        HashMap hashMapSym = new HashMap<>();
-        hashMapSym = symptomCountHashMap.symptomCounterMakeHash((ArrayList<String>) results);
+        HashMap hashMapSym = symptomCountHashMap.symptomCounterMakeHash((ArrayList<String>) results);
 
-        // 3. apeler la metode sort de Collection pour metre mon hasMAp en ordre aplhabetique (voir TreeMap)
+        // 3. transformer notre dictionnaire en treeMap pour avoir l'ordre alphabétique
         ConvertHashToTreeMap symptomTreeMap = new ConvertHashToTreeMap();
         TreeMap treMp = symptomTreeMap.convertHashMapToTreeMap(hashMapSym);
 
-        // 4. creation du fichier final avec
+        // 4. création du fichier final
         WriteSymptomsToFile writerSym = new WriteSymptomsToFile();
         writerSym.writeFile(treMp);
 

@@ -7,8 +7,6 @@ public class ConvertHashToTreeMap {
 
     public <String, Integer> TreeMap<String, Integer> convertHashMapToTreeMap(HashMap<String, Integer> hm)
     {
-        TreeMap<String, Integer> treeMap = new TreeMap<>(hm);
-
-        return treeMap;
+        return new TreeMap<>(hm);
     }
 }
