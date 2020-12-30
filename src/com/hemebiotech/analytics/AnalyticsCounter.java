@@ -1,43 +1,33 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.*;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
-	
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
 
-		int i = 0;	// set i to 0
-		int headCount = 0;	// counts headaches
-		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
-			}
-			else if (line.equals("rush")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
 
-			line = reader.readLine();	// get another symptom
-		}
-		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
-	}
+    /**
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+
+        // 1. extraire les lignes d'un fichier dans une liste
+        ReadSymptomDataFromFile readSymptom = new ReadSymptomDataFromFile("symptoms.txt");
+        List<String> results = readSymptom.getSymptoms();
+
+        // 2. faire une boucle sur la liste obtenue pour calculer le nombre de fois que les symptômes se répètent
+        // et la mettre dans un dictionnaire avec key value
+        SymptomCounter symptomCountHashMap = new SymptomCounter();
+        HashMap hashMapSym = symptomCountHashMap.symptomCounterMakeHash((ArrayList<String>) results);
+
+        // 3. transformer notre dictionnaire en treeMap pour avoir l'ordre alphabétique
+        ConvertHashToTreeMap symptomTreeMap = new ConvertHashToTreeMap();
+        TreeMap treMp = symptomTreeMap.convertHashMapToTreeMap(hashMapSym);
+
+        // 4. création du fichier final
+        WriteSymptomsToFile writerSym = new WriteSymptomsToFile();
+        writerSym.writeFile(treMp);
+
+    }
+
 }
